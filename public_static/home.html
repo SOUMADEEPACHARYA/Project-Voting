@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <!-- Bootstrap css-->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- bootstrap javascript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link href="stylesheets/app.css" rel="stylesheet">
+
+    <style>
+        /*#options{
+            height: 40px;
+            width: 90%;
+            font-size: 1.2em;
+        }
+        #selecttag{
+            font-size: 1.7em;
+        }
+        #submit{
+          width: 20%;
+          display: block;
+          margin: 20px auto;
+        }
+        .select, .send, #all-accounts{
+            display: none;
+        }
+        .active{
+            display: block !important;
+        }*/
+    </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+
+      <div class="col-md-10 col-md-offset-1">
+        <div class="send">
+            <h2>Example Dapp</h2>
+            <h3>Your Account <span class="black" id="account"></span></h3>
+
+          <div id = "ballot">
+              
+              <p> ballot name 
+              <input type="text" id="ballotName" placeholder="name"> </p>
+              <p>start time
+              <input type="text" id="startTime" placeholder="start time"></p>
+              <p>end time
+              <input type="text" id="endTime" placeholder="end time"> </p>
+
+              <p>candidates </p>
+              <div id="myDIV" >
+                  <input type="text" id="myInput" placeholder="candidate i">
+                  <button onclick="newElement()" class="addBtn">Add </button>
+              </div>
+
+              <ul id="myUL"></ul>  
+
+              <br/>
+              <button onclick="update()" class="addBtn"> submit </button>
+
+              <p> ballot name:  <span id="bName"> </span>  </p>
+              <p>start time: <span id="bST"> </span>  </p>
+              <p>end time: <span id="bET"> </span>  </p>
+              <p>candidates: <span id="bCans"> </span>  </p> 
+                          
+              <br/>
+              <button onclick="setBallot();" class="addBtn"> transact  </button>
+
+          </div>
+
+          <div id="content">
+
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Start Time</th>
+                  <th scope="col">End Time</th>
+                  <th scope="col">candidate count</th>
+                </tr>
+              </thead>
+              <tbody id="ballotDetails">
+              </tbody>
+            </table>
+            <hr/>
+
+          </div>
+
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+    <script src="javascript/addBallots.js"></script>
+</body>
+</html>

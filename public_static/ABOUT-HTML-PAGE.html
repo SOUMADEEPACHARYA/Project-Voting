@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+.column {
+  float: left;
+  width: 25%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  margin: 8px;
+}
+
+.about-section {
+  padding: 50px;
+  text-align: center;
+  background-color: #87CEFF;
+  color: Yellow;
+
+}
+
+.container {
+  padding: 0 16px;
+  box-shadow: 5px 10px #888888;
+}
+
+.container::after, .row::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: Navy;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: Red;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #FF0000;
+}
+
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
+    display: block;
+  }
+}
+</style>
+</head>
+<body>
+<div class="about-section">
+  <h1>About Us Page</h1>
+  <p>e-Vote is an election system that faciitates voters to record their secure and secret ballot electronically .
+  It has a friendly user interface and enables voters to cast their votes in few simple step.we ensures the authenticity of
+  the voters and votes cast by them along with non-traceability of the casted vote .it provides you with the most advanced 
+  technology so that you can carry out elections and consultations simple and securely.Our sollution allows organizations to
+  hold efficient elections.
+
+  </p>
+  <p>we had welcome the opportunity to work with you to provide exceptional and unparallel service.</p>
+</div>
+
+<h2 style="text-align:center ;">Our Team</h2>
+<div class="row">
+  <div class="column">
+    <div class="card">
+      <div class="container">
+        <h2>Anirban Das</h2>
+        <p class="title">Devoloper</p>
+        <p>Hello, I am Anirban Das, final year student of Kalyani Government engineering college and This is my final year project</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="card">
+      <div class="container">
+        <h2>Shrabana Biswas</h2>
+        <p class="title">Devoloper</p>
+        <p>Hello, I am Shrabana Biswas, final year student of Kalyani Government engineering college and This is my final year project</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="column">
+    <div class="card">
+      <div class="container">
+        <h2>Sayanti Bhattacharjee</h2>
+        <p class="title">Devoloper</p>
+        <p>Hello, I am Sayanti Bhattacharjee, final year student of Kalyani Government engineering college and This is my final year project</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+  <div class="column">
+    <div class="card">
+      <div class="container">
+        <h2>Soumadeep Acharya</h2>
+        <p class="title">Devoloper</p>
+        <p>Hello, I am Soumadeep Acharya, final year student of Kalyani Government engineering college and This is my final year project</p>
+        <p><button class="button">Contact</button></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

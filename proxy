@@ -1,54 +1,354 @@
+Program.cs.....................................................................................................................................
 using System;
-using System.Collections;
-using System.Globalization;
-using System.IO;
+using StoresScheduleSystemBLL;
+namespace StoresScheduleSystemConsoleUi
+{
+ class Program
+ {
+ static void Main(string[] args)
+ {
+ string Continue = "y";
+ StoreScheduler StoreScheduler = new StoreScheduler();
+ if (Continue.ToLower() == "n")
+ {
+ System.Environment.Exit(1);
+ }
+ else
+ {
+ while (Continue.ToLower() == "y")
+ {
+ Console.WriteLine("-------------------------------------------------");
+ Console.WriteLine("========= GHMC Stores Scheduler =========");
+ Console.WriteLine("-------------------------------------------------");
+ try
+ {
+ FindAndUpdateStore(StoreScheduler);
+ }
+ catch (Exception ex)
+ {
+ Console.WriteLine("Error : " + ex.Message);
+ }
+ finally
+ {
+ Console.WriteLine();
+ Console.Write("Do you want to continue for another store(y/n) :");
+ Continue = Console.ReadLine();
+ }
+ }
+ }
 
+ }
+ private static void FindAndUpdateStore(StoreScheduler StoreScheduler)
+ {
 
-    public class Program  //DO NOT CHANGE the name of class 'Program'
-    {
-        public static void Main(string[] args) //DO NOT CHANGE 'Main' Signature
-        {
-            
-            //Fill the code here
-            StreamReader sr = new StreamReader("input.csv");
-                string line;
-                while((line = sr.ReadLine()) != null)
-                {
-                    //string[] details = line.Split(new char[]{','});
-                    //Product p=new Product(details[0],details[1],Convert.ToDateTime(details[2]),Convert.ToDouble(details[3]));
-                    Console.WriteLine(line);
-                }
-        }
-    }
-    
-    
-    
-    
-    using System;
+ StoreScheduler storeScheduler = new StoreScheduler();
+ Console.WriteLine("Enter store id");
+ int id = Convert.ToInt32(Console.ReadLine());
+
+ Store store = storeScheduler.GetStoreById(id);
+ if (store.StoreId == id)
+ {
+ Console.WriteLine("Found a store with following details");
+ Console.WriteLine("StoreName : " + store.StoreName);
+ Console.WriteLine("OwnerName : " + store.OwnerName);
+ Console.WriteLine("MobileNo : " + store.MobileNo);
+ Console.WriteLine("StoreAddress : " + store.StoreAddress);
+ Console.WriteLine("SellsEssentials : " + store.SellsEssentials);
+ Console.WriteLine("OpeningTime : " + store.OpeningTime);
+ Console.WriteLine("ClosingTime : " + store.ClosingTime);
+ Console.WriteLine("Enter the Timeslot assigned to store (TimeSlotA/TimeSlotB)");
+ try
+ {
+ string timeslot = Console.ReadLine();
+ storeScheduler.AssignTimings(store, timeslot);
+ storeScheduler.UpdateStoreTimings(store, timeslot);
+ Console.WriteLine("Time slot updated for the store {0}", store.StoreName);
+
+ }
+ catch (Exception e)
+ {
+ Console.WriteLine(e.Message);
+ }
+ }
+ else
+ {
+ Console.WriteLine("No store found for store id : {0}", id);
+ }
+ }
+ }
+}
+Store.cs...........................................................................................................................................
+.............
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+namespace StoresScheduleSystemBLL
+{
+ public class Store
+ {
+ public int StoreId { get; set; }
+ public string StoreName { get; set; }
+ public string OwnerName { get; set; }
+ public string MobileNo { get; set; }
+ public string StoreAddress { get; set; }
+ public bool SellsEssentials { get; set; }
+ public string OpeningTime { get; set; }
+ public string ClosingTime { get; set; }
+ }
+}
+StoreSchedular.cs...........................................................................................................................
+.....................
+using System;
+using System.Data;
+using StoresScheduleSystemDAL;
+namespace StoresScheduleSystemBLL
+{
+ public class StoreScheduler
+ {
+ StoresScheduleDAO StoresScheduleDAO = new StoresScheduleDAO();
+ public StoreScheduler()
+ {
+ // Instantiate fields here
+ }
+ public Store AssignTimings(Store store, string timeSlot)
+ {
+ TimeSlotA timeSlotA = new TimeSlotA();
+ TimeSlotB timeSlotB = new TimeSlotB();
+ if (timeSlot == "timeSlotA" || timeSlot=="TimeSlotA")
+ {
+ timeSlotA.SetIsEssentialItemsStore(Convert.ToBoolean(store.SellsEssentials));
+ store.OpeningTime = timeSlotA.GetOpeningTime();
+ store.ClosingTime = timeSlotA.GetClosingTime();
+ }
+ else if(timeSlot == "timeSlotB" || timeSlot == "TimeSlotB")
+ {
+ timeSlotB.SetIsEssentialItemsStore(Convert.ToBoolean(store.SellsEssentials));
+ store.OpeningTime = timeSlotB.GetOpeningTime();
+ store.ClosingTime = timeSlotB.GetClosingTime();
+ }
+ else
+ {
+ throw new ArgumentException("Error : Invalid time slot");
+ }
 
-    public class Product
-    {
-        private string _productName;
-        private string _serialNumber;
-        private DateTime _purchaseDate;
-        private double _cost;
-        
-        // Implement 4-Argument Constructor
-        
-        // Implement Properties
-       
-        public override string ToString()
-        {
-            return String.Format("{0,-15}{1,-15}{2,-15}{3,-15}", _productName, _serialNumber, String.Format("{0:d}", _purchaseDate), _cost);
-        }
-    }
+ return store;
+ }
+ public Store GetStoreById(int storeId)
+ {
+ Store Store = new Store();
+ DataTable dt = StoresScheduleDAO.FindStore(storeId);
+ if(dt!=null && dt.Rows.Count>0)
+ {
+ Store.MobileNo = dt.Rows[0]["MobileNo"].ToString();
+ Store.StoreName = dt.Rows[0]["StoreName"].ToString();
+ Store.OwnerName = dt.Rows[0]["OwnerName"].ToString();
+ Store.StoreId = Convert.ToInt32(dt.Rows[0]["StoreId"]);
+ Store.StoreAddress = dt.Rows[0]["StoreAddress"].ToString();
+ Store.SellsEssentials = Convert.ToBoolean(dt.Rows[0]["SellsEssentials"]);
+ Store.OpeningTime = dt.Rows[0]["OpeningTime"].ToString();
+ Store.ClosingTime = dt.Rows[0]["ClosingTime"].ToString();
+ }
+ else
+{
+return null;
+}
+
+ return Store;
+ }
+ public bool UpdateStoreTimings(Store store, string timeSlot)
+ {
+ bool IsUpdated = false;
+ // Donot change method signature
+ // Implement code here
 
 
+ TimeSlotA timeSlotA = new TimeSlotA();
+ TimeSlotB timeSlotB = new TimeSlotB();
+ if (timeSlot == "timeSlotA" || timeSlot=="TimeSlotA")
+ {
+ timeSlotA.SetIsEssentialItemsStore(Convert.ToBoolean(store.SellsEssentials));
+ store.OpeningTime = timeSlotA.GetOpeningTime();
+ store.ClosingTime = timeSlotA.GetClosingTime();
+ }
+ else if(timeSlot == "timeSlotB" || timeSlot == "TimeSlotB")
+ {
+ timeSlotB.SetIsEssentialItemsStore(Convert.ToBoolean(store.SellsEssentials));
+ store.OpeningTime = timeSlotB.GetOpeningTime();
+ store.ClosingTime = timeSlotB.GetClosingTime();
+ }
+ else
+ {
+ throw new Exception("Error : Invalid time slot");
+ }
+ StoresScheduleDAO storesScheduleDAO = new StoresScheduleDAO();
+
+ int a = storesScheduleDAO.UpdateStore(store.StoreId, store.OpeningTime,
+store.ClosingTime);
+ if (a > 0)
+ IsUpdated = true;
+
+ return IsUpdated;
+ }
+ }
+}
+StoresScheduleDAO.cs...................................................................................................................
+........................
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Configuration;
+namespace StoresScheduleSystemDAL
+{
+ public class StoresScheduleDAO
+ {
+ public SqlConnection connection;
+ public SqlCommand command;
+ public SqlDataAdapter adapter;
+ public string connstring =
+ConfigurationManager.ConnectionStrings["StoresConnection"].ConnectionString;
+ public StoresScheduleDAO()
+ {
+ // Instantiate fields here
+ }
+ public DataTable FindStore(int storeId)
+ {
+ DataTable table = new DataTable();
+
+ connection = new SqlConnection(connstring);
+ string query = "select * from Stores where storeId= " + storeId;
+
+ connection.Open();
+ adapter = new SqlDataAdapter(query, connection);
+
+ adapter.Fill(table);
+
+ connection.Close();
 
 
+ return table;
+ }
+ public int UpdateStore(int storeId, string openingTime, string closingTime)
+ {
+ int RowsAffected;
 
-HairTrimmer,HT123, 10-02-2017, 800
-Steel Box,SB231, 11-04-2018, 250
-Rope, RP240,13-05-2019,100
+ connection = new SqlConnection(connstring);
+ string query = "update dbo.Stores set OpeningTime= '" + openingTime + "'
+,ClosingTime= '" + closingTime + "' where StoreId= " + storeId;
+ connection.Open();
+ command = new SqlCommand(query, connection);
+ RowsAffected = command.ExecuteNonQuery();
+ connection.Close();
+ return RowsAffected;
+ }
+ }
+}
+TimeSlot.cs......................................................................................................................................
+......
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+namespace StoresScheduleSystemBLL
+{
+ public class TimeSlot
+ {
+ protected bool SellsEssentialItems;
+
+ public void SetIsEssentialItemsStore(bool isEssentialItemsStore)
+ {
+ SellsEssentialItems = isEssentialItemsStore;
+ }
+ public virtual string GetOpeningTime()
+ {
+ return "08:00 AM";
+ }
+ public virtual string GetClosingTime()
+ {
+ return "08:00 PM";
+ }
+ }
+}
+TimeSlotA.cs...................................................................................................................................
+...........
+using System;
+namespace StoresScheduleSystemBLL
+{
+ public class TimeSlotA:TimeSlot
+ {
+
+ public override string GetOpeningTime()
+ {
+ // Donot change method signature
+ // Implement code here
+
+ if (SellsEssentialItems)
+ {
+ return "08:00 AM";
+ }
+ else
+ {
+ return "10:00 AM";
+ }
+
+
+ }
+ public override string GetClosingTime()
+ {
+
+ if (SellsEssentialItems)
+ {
+ return "02:00 PM";
+ }
+ else
+ {
+ return "02:00 PM";
+ }
+
+
+ }
+ }
+}
+TimeSlotB.cs...................................................................................................................................
+...................
+using System;
+namespace StoresScheduleSystemBLL
+{
+ public class TimeSlotB:TimeSlot
+ {
+
+ public override string GetOpeningTime()
+ {
+
+ if (SellsEssentialItems)
+ {
+ return "02:00 PM";
+ }
+ else
+ {
+ return "04:00 PM";
+ }
+
+ }
+ public override string GetClosingTime()
+ {
+
+ if (SellsEssentialItems)
+ {
+ return "08:00 PM";
+ }
+ else
+ {
+ return "08:00 PM";
+ }
+
+ }
+
+}
+}

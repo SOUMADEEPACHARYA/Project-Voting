@@ -416,6 +416,82 @@ _Layout.cshtml
 
     </table>
     <span id="total" class="form-check col-md-offset-6" align="center"><b>Interest Total = </b>@Model.Sum(model => model.Interest).ToString("#.##") </span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using BankAccountsMgmt.Data;
+using BankAccountsMgmt.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+
+namespace BankAccountsMgmt.Controllers
+{
+    [CustomFilters.CustomExceptionFilter]
+    public class BankAccountsController : Controller
+    {
+        BankAccountDBContext db = new BankAccountDBContext();
+        // GET
+        public ActionResult Index()
+        {
+            //Implement your code 
+            List<BankAccount> bank = db.BankAccounts.OrderBy(b=>b.City).ToList();
+            return View(bank);
+        }
+        //Implement other action methods
+
+        [HttpPost]
+        public ActionResult Index(bool KYCComplete)
+        {
+            if (KYCComplete)
+            {
+                List<BankAccount> passports = db.BankAccounts.Where(p => p.KYCComplete == true).OrderBy(b => b.City).ToList();
+                return View(passports);
+            }
+            return RedirectToAction("Index");
+        }
+
+
+        public ActionResult AddBankAccount()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddBankAccount(BankAccount bankAccount)
+        {
+            if (ModelState.IsValid)
+            {
+                bankAccount.CalculateInterest();
+                db.BankAccounts.Add(bankAccount);
+                db.SaveChanges();
+                ViewBag.Message = "Bank Account added successfully!";
+                return View("Details", bankAccount);
+            }
+
+            return View(bankAccount);
+        }
+
+
+    }
 }
 
 

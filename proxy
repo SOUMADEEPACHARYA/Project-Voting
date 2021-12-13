@@ -327,3 +327,95 @@ _Layout.cshtml
     @Html.ActionLink("Back to List", "Index")
 </p>
 
+
+
+
+
+
+﻿@model List<BankAccountsMgmt.Models.BankAccount>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Bank Accounts List</h2>
+
+
+
+
+@using (Html.BeginForm("Index", "BankAccounts"))
+{
+    <div class="form-check col-md-offset-8" align="center">
+        @Html.CheckBox("KYCComplete", new { @name = "KYC", @id = "KYC" })
+        <label class="form-check-label" for="KYC">
+            KYC Complete ?
+            <button id="Submit">KYC Complete ?</button>
+        </label>
+    </div>
+    <table class="table">
+        <tr>
+            <th>
+                Account Holder Name
+            </th>
+            <th>
+                PAN Number
+            </th>
+            <th>
+                City
+            </th>
+            <th>
+                Gender
+            </th>
+
+            <th>
+                Amount
+            </th>
+            <th>
+                Interest Upto 30 Aug
+            </th>
+            <th>
+                Opening Date
+            </th>
+            <th>
+                KYC Complete?
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountHolderName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PAN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.City)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Interest)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OpeningDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KYCComplete)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+    <span id="total" class="form-check col-md-offset-6" align="center"><b>Interest Total = </b>@Model.Sum(model => model.Interest).ToString("#.##") </span>
+}
+
+

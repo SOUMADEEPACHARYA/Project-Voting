@@ -1,608 +1,450 @@
-
-<h3>AddBankAccount</h3>
-
-
-@using (Html.BeginForm("AddBankAccount","BankAccount",FormMethod.Post))
-{
-@Html.AntiForgeryToken()
-
-                <div class="form-horizontal">
-                    <h4>Bank Account</h4>
-                    <hr />
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.AccountHolderName, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.AccountHolderName, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.AccountHolderName, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.PAN, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.PAN, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.PAN, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EnumDropDownListFor(model => model.City, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EnumDropDownListFor(model => model.Gender, htmlAttributes: new { @class = "form-control" })
-                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.KYCComplete, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            <div class="checkbox">
-                                @Html.EditorFor(model => model.KYCComplete)
-                                @Html.ValidationMessageFor(model => model.KYCComplete, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.OpeningDate, htmlAttributes: new { @class = "control-label col-md-2" })
-                        <div class="col-md-10">
-                            @Html.EditorFor(model => model.OpeningDate, new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.ValidationMessageFor(model => model.OpeningDate, "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Add Bank Account" class="btn btn-default" />
-                        </div>
-                    </div>
-                </div>}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-_Layout.cshtml
-
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-</head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Bank Accounts Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                   
-                    <li>@Html.ActionLink("Accounts List", "Index", "BankAccount")</li>
-                    <li>@Html.ActionLink("Create New", "AddBankAccount", "BankAccount")</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
-
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
-</html
-
-
-
-
-@model BankAccountsMgmt.Models.BankAccount
-
-@{
-    ViewBag.Title = "AddBankAccount";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h3>Create</h3>
-
-
-@using (Html.BeginForm("AddBankAccount", "BankAccounts", FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Bank Account</h4>
-        <hr />
-        <div class="form-group">
-            @Html.LabelFor(model => model.AccountHolderName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AccountHolderName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AccountHolderName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PAN, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PAN, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PAN, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.City, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.City, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.City, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EnumDropDownListFor(model => model.Gender, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.KYCComplete, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.KYCComplete)
-                    @Html.ValidationMessageFor(model => model.KYCComplete, "", new { @class = "text-danger" })
-                </div>
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.OpeningDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.OpeningDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.OpeningDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Add Bank Account" class="btn btn-default" />
-            </div>
-        </div>
-    </div>}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@model BankAccountsMgmt.Models.BankAccount
-
-@{
-    ViewBag.Title = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h4>@ViewBag.Message</h4>
-<hr />
-
-<div>
-
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.AccountHolderName)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.AccountHolderName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PAN)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PAN)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.City)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.City)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Gender)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Amount)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Amount)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Interest)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Interest)
-        </dd>
-
-
-        <dt>
-            @Html.DisplayNameFor(model => model.OpeningDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.OpeningDate)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.KYCComplete)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.KYCComplete)
-        </dd>
-
-    </dl>
-</div>
-
-<p>
-
-    @Html.ActionLink("Back to List", "Index")
-</p>
-
-
-
-
-
-
-﻿@model List<BankAccountsMgmt.Models.BankAccount>
-
-@{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-
-<h2>Bank Accounts List</h2>
-
-
-
-
-@using (Html.BeginForm("Index", "BankAccounts"))
-{
-    <div class="form-check col-md-offset-8" align="center">
-        @Html.CheckBox("KYCComplete", new { @name = "KYC", @id = "KYC" })
-        <label class="form-check-label" for="KYC">
-            KYC Complete ?
-            <button id="Submit">KYC Complete ?</button>
-        </label>
-    </div>
-    <table class="table">
-        <tr>
-            <th>
-                Account Holder Name
-            </th>
-            <th>
-                PAN Number
-            </th>
-            <th>
-                City
-            </th>
-            <th>
-                Gender
-            </th>
-
-            <th>
-                Amount
-            </th>
-            <th>
-                Interest Upto 30 Aug
-            </th>
-            <th>
-                Opening Date
-            </th>
-            <th>
-                KYC Complete?
-            </th>
-            <th></th>
-        </tr>
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AccountHolderName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PAN)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.City)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Gender)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Amount)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Interest)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.OpeningDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.KYCComplete)
-                </td>
-
-            </tr>
-        }
-
-    </table>
-    <span id="total" class="form-check col-md-offset-6" align="center"><b>Interest Total = </b>@Model.Sum(model => model.Interest).ToString("#.##") </span>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-using BankAccountsMgmt.Data;
-using BankAccountsMgmt.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-
-
-namespace BankAccountsMgmt.Controllers
-{
-    [CustomFilters.CustomExceptionFilter]
-    public class BankAccountsController : Controller
-    {
-        BankAccountDBContext db = new BankAccountDBContext();
-        // GET
-        public ActionResult Index()
-        {
-            //Implement your code 
-            List<BankAccount> bank = db.BankAccounts.OrderBy(b=>b.City).ToList();
-            return View(bank);
-        }
-        //Implement other action methods
-
-        [HttpPost]
-        public ActionResult Index(bool KYCComplete)
-        {
-            if (KYCComplete)
-            {
-                List<BankAccount> passports = db.BankAccounts.Where(p => p.KYCComplete == true).OrderBy(b => b.City).ToList();
-                return View(passports);
-            }
-            return RedirectToAction("Index");
-        }
-
-
-        public ActionResult AddBankAccount()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult AddBankAccount(BankAccount bankAccount)
-        {
-            if (ModelState.IsValid)
-            {
-                bankAccount.CalculateInterest();
-                db.BankAccounts.Add(bankAccount);
-                db.SaveChanges();
-                ViewBag.Message = "Bank Account added successfully!";
-                return View("Details", bankAccount);
-            }
-
-            return View(bankAccount);
-        }
-
-
-    }
-}
-
-
-
-
-
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-
-namespace BankAccountsMgmt.Models
-{
-    public enum City
-    {
-        Select,
-        Chennai,
-        Dehradun,
-        Delhi,
-        Hyderabad,
-        Kolkata,
-        Mumbai
-    }
-
-    public enum Gender
-    {
-        Select,
-        Male,
-        Female,
-        Others
-    }
-
-    public class BankAccount
-    {
-        //Implement DataAnnotations 
-        [Key]
-        public int AccountID { get; set; }
-
-
-        [Required(ErrorMessage = "Please Provide Account Holder Name")]
-        [MaxLength(255)]
-        [Display(Name = "Account Holder Name")]
-
-        public string AccountHolderName { get; set; }
-
-
-        [Required(ErrorMessage = "Please provide PAN Number")]
-        [Display(Name = "PAN Number")]
-        [RegularExpression("^([A-Za-z]){5}([0-9]){4}([A-Za-z]){1}$", ErrorMessage = "Please provide a valid PAN")]
-        [MaxLength(10)]
-        public string PAN { get; set; }
-
-
-        [Required(ErrorMessage = "Please Select a City")]
-        [Range(1, 6, ErrorMessage = "Please Select a City")]
-        [Display(Name = "City")]
-        public City City { get; set; }
-
-
-        [Required(ErrorMessage = "Please Select Gender")]
-        [Range(1, 3, ErrorMessage = "Please Select Gender")]
-        [Display(Name = "Gender")]
-        public Gender Gender { get; set; }
-
-
-        [Display(Name = "KYC Complete?")]
-        public bool KYCComplete { get; set; }
-
-
-        [Required]
-        [Display(Name = "Amount")]
-        [Range(1000, 50000, ErrorMessage = "Should be between 1000 and 50000")]
-        public int Amount { get; set; }
-
-
-
-        [Required(ErrorMessage = "Please provide Opening Date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yy}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Opening Date")]
-
-        public DateTime? OpeningDate { get; set; }
-
-
-        [DisplayFormat(DataFormatString = "{0:0.00}", ApplyFormatInEditMode = true)]
-        [Display(Name = "Interest Upto 30 Aug")]
-        public double Interest { get; set; }
-
-        public void CalculateInterest()
-        {
-            //Implement your code 
-            Double rateInterest;
-            DateTime dt1 = DateTime.Parse("30/08/2020");
-            //second date
-            DateTime dt2 = DateTime.Now;
-            //Subtact dates
-            TimeSpan ts = dt2-dt1;
-            //result.
-            double days = ts.TotalDays;
-            if (Gender == Gender.Male)
-            {
-                rateInterest = 2.5;
-            }
-            else
-            {
-                rateInterest = 3.5;
-            }
-            Interest = (Amount * days * rateInterest) / (30 * 12 * 100);
-
-        }
-    }
-}
-
+1 using System;
+2 using System.Collections.Generic;
+3 using System.Diagnostics;
+4 using System.Linq;
+5 using System.Web;
+6 using System.Web.Mvc;
+7 using System.Web.Routing;
+8
+9 //DO NOT MODIFY ANYTHING HERE
+10 namespace RestaurantManagementSystem.CustomFilters
+11 {
+12 public class CustomExceptionFilterAttribute : FilterAttribute, IExceptionFilter
+13
+14 {
+15 public void OnException(ExceptionContext filterContext)
+16 {
+17 ConsoleLog(filterContext.Exception.Message);
+18 }
+19
+20 static string scriptTag = "<script type=\"\" language=\"\">{0}</script>";
+21
+22 public static void ConsoleLog(string message)
+23 {
+24 string function = "console.log('{0}');";
+25 string log = string.Format(GenerateCodeFromFunction(function), message);
+26 HttpContext.Current.Response.Write(log);
+27 }
+28
+29 static string GenerateCodeFromFunction(string function)
+30 {
+31 return string.Format(scriptTag, function);
+32 }
+33
+34
+35 }
+36 }
+37
+38 @*Details view code goes here*@
+39 @model RestaurantManagementSystem.Models.Restaurant
+40
+41 @{
+42 ViewBag.Title = "Details";
+43 Layout = "~/Views/Shared/_Layout.cshtml";
+44 }
+45
+46 <h4>Restaurant Added Successfully!</h4>
+47 <hr />
+48 <div>
+49 @*<h4>Restaurant</h4>
+50 <hr />*@
+51 <dl class="dl-horizontal">
+52 <dt>
+53 @Html.DisplayNameFor(model => model.Name)
+54 </dt>
+55
+56 <dd>
+57 @Html.DisplayFor(model => model.Name)
+58 </dd>
+59
+60 <dt>
+61 @Html.DisplayNameFor(model => model.Cuisine)
+62 </dt>
+63
+64 <dd>
+65 @Html.DisplayFor(model => model.Cuisine)
+66 </dd>
+67 <dt>
+68 @Html.DisplayNameFor(model => model.LaunchDate)
+69 </dt>
+70
+71 <dd>
+72 @Html.DisplayFor(model => model.LaunchDate)
+73 </dd>
+74 <dt>
+75 @Html.DisplayNameFor(model => model.OnlineOrders)
+76 </dt>
+77
+78 <dd>
+79 @Html.DisplayFor(model => model.OnlineOrders)
+80 </dd>
+81
+82 </dl>
+83 </div>
+84 <p>
+85 @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
+86 @Html.ActionLink("Back to List", "Index")
+87 </p>
+88 @*Index view code goes here*@
+89 @model IEnumerable<RestaurantManagementSystem.Models.Restaurant>
+90
+91 @{
+92 ViewBag.Title = "Index";
+93 Layout = "~/Views/Shared/_Layout.cshtml";
+94 }
+95
+96 <h2>Index</h2>
+97
+98 <p>
+99 @Html.ActionLink("Create New","AddRestaurant")
+100 </p>
+101 <table class="table">
+102 <tr>
+103 <th>
+104 @Html.DisplayNameFor(model => model.Name)
+105 </th>
+106 <th>
+107 @Html.DisplayNameFor(model => model.Cuisine)
+108 </th>
+109 <th>
+110 @Html.DisplayNameFor(model => model.LaunchDate)
+111 </th>
+112 <th>
+113 @Html.DisplayNameFor(model => model.OnlineOrders)
+114 </th>
+115 <th></th>
+116 </tr>
+117
+118 @foreach (var item in Model) {
+119 <tr>
+120 <td>
+121 @Html.DisplayFor(modelItem => item.Name)
+122 </td>
+123 <td>
+124 @Html.DisplayFor(modelItem => item.Cuisine)
+125 </td>
+126 <td>
+127 @Html.DisplayFor(modelItem => item.LaunchDate)
+128 </td>
+129 <td>
+130 @Html.DisplayFor(modelItem => item.OnlineOrders)
+131 </td>
+132 @*<td>
+133 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+134 @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+135 @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+136 </td>*@
+137 </tr>
+138 }
+139
+140 </table>
+141
+142
+
+
+
+
+
+
+
+
+
+
+
+
+
+143 using System;
+144 using System.ComponentModel.DataAnnotations;
+145 using System.ComponentModel;
+146 //DO NOT MODIFY ANYTHING HERE
+147 namespace RestaurantManagementSystem.Models
+148 {
+149 public class Restaurant
+150 {
+151 [Key]
+152 public int Id { get; set; }
+153
+154 [Required(ErrorMessage = "Please Provide Restaurant Name")]
+155 [MaxLength(255)]
+156 public string Name { get; set; }
+157
+158 //[Required(ErrorMessage = "Please Select Cuisine Type")]
+159 [Display(Name = "Type of food")]
+160 [DefaultValue("None")]
+161 public CuisineType? Cuisine { get; set; }
+162
+163 [Required(ErrorMessage = "Please Provide Online Orders")]
+164 [Display(Name = "Open for Online Orders?")]
+165 public bool OnlineOrders { get; set; }
+166
+167 [Required(ErrorMessage = "Please Provide Valid Date")]
+168 [DataType(DataType.Date)]
+169 [DisplayFormat(DataFormatString = "{0:dd-MM-yy}", ApplyFormatInEditMode =
+true)]
+170 public DateTime? LaunchDate { get; set; }
+171
+172
+173 }
+174 }
+175
+176 using System;
+177 using System.Linq;
+178 using System.Web.Mvc;
+179 using RestaurantManagementSystem.Models;
+180
+181
+182 //DO NOT MODIFY THE NAMESPACE AND CONTROLLER NAME
+183 namespace RestaurantManagementSystem.Controllers
+184 {
+185
+186 public class RestaurantController : Controller
+187 {
+188 RestaurantManagementDbContext context = new RestaurantManagementDbContext();
+189 [HttpGet]
+190 // GET: Restaurant
+191 public ActionResult Index()
+192 {
+193
+194 var context = new RestaurantManagementDbContext();
+195 var restaurant=context.Restaurants.ToList();
+196 return View(restaurant);
+197
+198 }
+199 [HttpGet]
+200 public ActionResult AddRestaurant()
+201 {
+202 var viewModel = new Restaurant();
+203 return View(viewModel);
+204
+205 }
+206 [HttpPost]
+207 //[CustomExceptionFilterAttribute]
+208 public ActionResult AddRestaurant(Restaurant restaurant) //DO NOT change
+the action name
+209 {
+210 if (ModelState.IsValid)
+211 {
+212 var context = new RestaurantManagementDbContext();
+213 context.Restaurants.Add(restaurant);
+214 context.SaveChanges();
+215 //return View("Details", restaurant);
+216 //return RedirectToAction("Details", restaurant);
+217 return RedirectToAction("Details",new { id = restaurant.Id });
+218
+219 }
+220 return View(restaurant);
+221 }
+222 public ActionResult Details(int? id)
+223 {
+224 var context = new RestaurantManagementDbContext();
+225 Restaurant res = null;
+226 if (id != null)
+227 {
+228 res = context.Restaurants.Where(model => model.Id ==
+id).FirstOrDefault();
+229 return View(res);
+230 }
+231 return View();
+232 }
+233 }
+234 }
+235
+236
+237 using RestaurantManagementSystem.Models;
+238 using System;
+239 using System.Collections.Generic;
+240 using System.Data.Entity;
+241 using System.Linq;
+242 using System.Text;
+243 using System.Threading.Tasks;
+244
+245 //DO NOT MODIFY THE NAMESPACE
+246 namespace RestaurantManagementSystem.Models
+247 {
+248 public class RestaurantManagementDbContext : DbContext
+249 {
+250 //code goes here
+251 public virtual DbSet<Restaurant> Restaurants {get;set;}
+252
+253 /// <summary>
+254 /// Constructor to initialize RestaurantManagementDbContext object
+255 /// </summary>
+256 public RestaurantManagementDbContext() : base("RMS_DB")
+257 {
+258 //no code here
+259 }
+260
+261
+262 }
+263 }
+264
+265 <!DOCTYPE html>
+266 <html>
+267 <head>
+268 <meta charset="utf-8" />
+269 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+270 <title>@ViewBag.Title - Restaurant Management Application</title>
+271 @Styles.Render("~/Content/css")
+272 @Scripts.Render("~/bundles/modernizr")
+273 </head>
+274 <body>
+275
+276
+277 @*Nav bar with home page link and restaurant list link code goes here*@
+278 <div class="navbar navbar-inverse navbar-fixed-top">
+279 <div class="container">
+280 <div class="navbar-header">
+281 <button type="button" class="navbar-toggle" data-toggle="collapse"
+data-target=".navbar-collapse">
+282 <span class="icon-bar"></span>
+283 <span class="icon-bar"></span>
+284 <span class="icon-bar"></span>
+285 </button>
+286 @Html.ActionLink("Restaurant Management System", "Index",
+"Restaurant", new { area = "" }, new { @class = "navbar-brand" })
+287 </div>
+288 <div class="navbar-collapse collapse">
+289 <ul class="nav navbar-nav">
+290 <li>@Html.ActionLink("RestaurantList",
+"Index", "Restaurant")</li>
+291 </ul>
+292 </div>
+293 </div>
+294 </div>
+295 <div class="container body-content">
+296 @RenderBody()
+297 <hr />
+298 <footer>
+299 <p>&copy; @DateTime.Now.Year - Restaurant Management Application</p>
+300 </footer>
+301 </div>
+302
+303 @Scripts.Render("~/bundles/jquery")
+304 @Scripts.Render("~/bundles/bootstrap")
+305 @RenderSection("scripts", required: false)
+306 </body>
+307 </html>
+308
+309 @*AddRestaurant view code goes here*@
+310 @model RestaurantManagementSystem.Models.Restaurant
+311
+312 @{
+313 ViewBag.Title = "AddRestaurant";
+314 Layout = "~/Views/Shared/_Layout.cshtml";
+315 }
+316
+317 @*<h2>AddRestaurant</h2>*@
+318
+319
+320 @using (Html.BeginForm("AddRestaurant", "Restaurant", FormMethod.Post))
+321 {
+322 @Html.AntiForgeryToken()
+323 <h2>Create</h2>
+324 <div class="form-horizontal">
+325 <h4>Restaurant</h4>
+326 <hr />
+327 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+328 <div class="form-group">
+329 @Html.LabelFor(model => model.Name, htmlAttributes: new { @class =
+"control-label col-md-2" })
+330 <div class="col-md-10">
+331 @Html.EditorFor(model => model.Name, new { htmlAttributes = new {
+@class = "form-control", @id = "Name" } })
+332 @Html.ValidationMessageFor(model => model.Name, "", new { @class =
+"text-danger" })
+333 </div>
+334 </div>
+335
+336 @*<div class="form-group">
+337 @Html.LabelFor(model => model.Cuisine, htmlAttributes: new { @class =
+"control-label col-md-2" })
+338 <div class="col-md-10">
+339 @Html.EnumDropDownListFor(model => model.Cuisine, "None", new {
+htmlAttributes = new { @class = "form-control", @id = "Type of Food"
+} })
+340 @Html.ValidationMessageFor(model => model.Cuisine, "", new { @class
+= "text-danger" })
+341 </div>
+342 </div>*@
+343 <div class="form-group">
+344 @Html.LabelFor(model => model.Cuisine, htmlAttributes: new { @class =
+"control-label col-md-2" })
+345 <div class="col-md-10">
+346 @Html.EnumDropDownListFor(model => model.Cuisine, "None",
+htmlAttributes: new { @class = "form-control", @id = "Type of Food" })
+347 @Html.ValidationMessageFor(model => model.Cuisine, "", new { @class
+= "text-danger" })
+348 </div>
+349 </div>
+350
+351
+352
+353 <div class="form-group">
+354 @Html.LabelFor(model => model.LaunchDate, htmlAttributes: new { @class =
+"control-label col-md-2" })
+355 <div class="col-md-10">
+356 @Html.EditorFor(model => model.LaunchDate, "dd/mm/yyyy", new {
+htmlAttributes = new { @class = "form-control", @id = "LaunchDate" }
+})
+357 @Html.ValidationMessageFor(model => model.LaunchDate, "", new {
+@class = "text-danger" })
+358 </div>
+359 </div>
+360 <div class="form-group">
+361 @Html.LabelFor(model => model.OnlineOrders, htmlAttributes: new { @class
+= "control-label col-md-2" })
+362 <div class="col-md-10">
+363 <div class="checkbox">
+364 @Html.EditorFor(model => model.OnlineOrders)
+365 @Html.ValidationMessageFor(model => model.OnlineOrders, "", new
+{ @class = "text-danger" })
+366 </div>
+367 </div>
+368 </div>
+369
+370 <div class="form-group">
+371 <div class="col-md-offset-2 col-md-10">
+372 <input type="submit" value="Add Restaurant" id="Submit" class="btn
+btn-default" />
+373 </div>
+374 </div>
+375 </div>
+376 }
+377
+378 <div>
+379 @Html.ActionLink("Back to List", "Index")
+380 </div>
+381
+382 @section Scripts {
+383 @Scripts.Render("~/bundles/jqueryval")
+384 }
+385
+386
+387 using System;
+388 using System.Collections.Generic;
+389 using System.Linq;
+390 using System.Web;
+391
+392 //DO NOT MODIFY ANYTHING HERE
+393 namespace RestaurantManagementSystem.Models
+394 {
+395 public enum CuisineType
+396 {
+397 Italian,
+398 Indian,
+399 French,
+400 Mexican,
+401 Chineese,
+402 Japaneese,
+403 Iranian,
+404 Spanish,
+405 Greece,
+406 American,
+407 Arabian
+408 }
+409 }
+410
+411
+412 @{
+413 Layout = "~/Views/Shared/_Layout.cshtml";
+414 }
